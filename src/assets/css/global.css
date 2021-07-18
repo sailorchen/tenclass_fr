@@ -1,0 +1,26 @@
+/* 全局样式表 */
+
+html,body,#app{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.el-breadcrumb{
+    margin-bottom: 20px;
+}
+.el-table{
+    margin-top: 15px;
+    font-size: 12px;
+}
+.el-pagination{
+    margin-top: 15px;
+}
+.el-select {
+    margin-bottom: 10px;
+}
+.el-input {
+    margin-bottom: 10px;
+}
+.el-textarea {
+    margin-bottom: 10px;
+}
