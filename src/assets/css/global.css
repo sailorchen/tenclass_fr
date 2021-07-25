@@ -24,3 +24,6 @@ html,body,#app{
 .el-textarea {
     margin-bottom: 10px;
 }
+.dd .el-textarea__inner{
+    background-color: blue;
+}

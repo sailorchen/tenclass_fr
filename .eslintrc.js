@@ -25,5 +25,8 @@ module.exports = {
     'object-curly-newline': 0,
     'vue/no-unused-vars':0,
     'no-unused-vars':0,
+    'brace-style':0,
+    'keyword-spacing':0,
+    'space-in-parens':0,
   }
 }
