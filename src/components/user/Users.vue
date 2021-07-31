@@ -12,8 +12,8 @@
         <!-- 搜索与添加区域 栅栏布局 -->
         <el-row :gutter="20">
         <el-col :span="6">
-             <el-input placeholder="请输入内容" clearable v-model="queryInfo.query">
-            <el-button slot="append" icon="el-icon-search" @click="getUserList"></el-button>
+             <el-input placeholder="请输入姓名" clearable v-model="queryInfo.key_words">
+            <el-button slot="append" icon="el-icon-search" @click="search_user"></el-button>
         </el-input>
         </el-col>
         <el-col :span="6">
@@ -24,7 +24,6 @@
         <!-- 用户列表区域 -->
         <el-table
             :data="userList"
-            height="250"
             border
             style="width: 100%">
             <!-- 索引列 -->
@@ -35,7 +34,7 @@
             </el-table-column>
             <!-- 数据列 -->
             <el-table-column
-            prop="username"
+            prop="fullname"
             label="姓名"
             width="180">
             </el-table-column>
@@ -45,12 +44,12 @@
             width="180">
             </el-table-column>
             <el-table-column
-            prop="address"
+            prop="email"
             label="邮箱">
             </el-table-column>
             <el-table-column
-            prop="address"
-            label="地址">
+            prop="password"
+            label="密码">
             </el-table-column>
             <!-- 将状态的值转换成开关 -->
             <el-table-column
@@ -84,7 +83,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="queryInfo.pagenum"
-      :page-sizes="[1, 2, 5, 100]"
+      :page-sizes="[10, 20, 50, 100]"
       :page-size="queryInfo.pagesize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -149,11 +148,12 @@ export default {
             userList: [],
             total: 0,
             queryInfo: {
-                query: '',
+                key_words: '',
                 // 当前多少页
                 pagenum: 1,
                 // 当前显示每页多少条数据
-                pagesize: 10
+                pagesize: 10,
+                offset: 0
             },
             // 控制对话框的显示
             addUserDialog: false,
@@ -179,20 +179,25 @@ export default {
     methods: {
     // 获取菜单
     async getUserList(){
-       const { data: res } = await this.$http.get('userlist')
-       if (res.code !== 200) return this.$message.error('获取用户列表失败')
-       this.userList = res.data
+       const { data: res } = await this.$http.get('userlist',{ params: { 'limit': this.queryInfo.pagesize,'offset': this.queryInfo.offset } })
+    //    if (res.code !== 200) return this.$message.error('获取用户列表失败')
+       this.userList = res.results
+       this.total = res.count
     },
+    async search_user(){
+       const { data: res } = await this.$http.get('userlist',{ params: { 'limit': this.queryInfo.pagesize,'fullname': this.queryInfo.key_words } })
+    //    if (res.code !== 200) return this.$message.error('获取用户列表失败')
+       this.userList = res.results
+       this.total = res.count
+    }, 
     // 监听页面改变
     handleSizeChange(newSize) {
-        console.log(newSize)
         this.queryInfo.pagesize = newSize
         this.getUserList()
     },
         // 监听页码值的事件
     handleCurrentChange(newPage) {
-        console.log(newPage)
-         this.queryInfo.pagenum = newPage
+        this.queryInfo.offset = this.queryInfo.pagesize * (newPage-1)
          this.getUserList()
     },
     // 监听开关状态变化

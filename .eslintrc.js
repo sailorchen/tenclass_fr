@@ -28,5 +28,6 @@ module.exports = {
     'brace-style':0,
     'keyword-spacing':0,
     'space-in-parens':0,
+    'space-infix-ops':0
   }
 }
