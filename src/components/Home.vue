@@ -18,7 +18,7 @@
             <!-- default-active 菜单激活的路径 -->
         <el-menu background-color="#333744" text-color="#fff" active-text-color="#1E90FF" unique-opened :collapse="collapse" :collapse-transition="false" :default-active="activePath" router>
             <!-- 一级菜单 -->
-            <el-submenu :index="item.id" v-for="item in menuList" :key="item.id">
+            <el-submenu :index="item.id+''" v-for="item in menuList" :key="item.id">
             <template slot="title">
             <i :class="iconsObj[item.id]"></i>
             <span>{{ item.menuName }}</span>
