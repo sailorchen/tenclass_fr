@@ -92,15 +92,21 @@
   </el-select> 
   </el-form-item>
 
-  <el-form-item label="描述" prop="src_desc">
-<el-input
-  placeholder="使用参数"
+  <!-- <el-form-item label="描述" prop="src_desc"> -->
+<!-- <el-input
+  placeholder="脚本描述"
   type='textarea'
   autosize
-  v-model="src_desc"
-  :disabled="true">
-</el-input>
-  </el-form-item>
+  v-html="src_desc"
+   :disabled="true">
+</el-input> -->
+  <!-- <span v-html='src_desc' class="desc_class"></span> -->
+
+  <el-row :gutter="10">
+  <el-col :span="2"><div class="grid-content bg-purple">{{ temp_text }} </div></el-col>
+  <el-col :span="8"><div class="grid-content bg-purple desc_class"><span v-html='src_desc' class="desc_class"></span></div></el-col>
+</el-row>
+  <!-- </el-form-item> -->
   
   <!-- 添加参数表单项 -->
   <el-form-item
@@ -204,7 +210,8 @@ export default {
             selectValue: {},
             shopValue: {},
             // 控制台文本
-            console_text: ''
+            console_text: '',
+            temp_text: ''
         }
     },
     methods: {
@@ -247,8 +254,8 @@ export default {
       },
       // 选择脚本时改变脚本描述
       currentSel(){
-        // console.log(this.selectValue.src_desc)
         this.src_desc = this.selectValue.src_desc
+        this.temp_text = '脚本描述'
         this.runForm.src_name = this.selectValue.src_name
       },
       // 根据店铺环境改变shops的值

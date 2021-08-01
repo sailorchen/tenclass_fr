@@ -24,6 +24,7 @@ html,body,#app{
 .el-textarea {
     margin-bottom: 10px;
 }
-.dd .el-textarea__inner {
-    background-color: blue;
+.desc_class {
+    margin-bottom: 30px;
+    margin-left: -15px;
 }
