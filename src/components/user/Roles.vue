@@ -217,25 +217,25 @@ export default {
     methods: {
       // 运行脚本请求
         create_src() {
-        this.$refs.runFormRef.validate(valid =>{
+        this.$refs.runFormRef.validate(async valid =>{
             if (!valid) return 
             // 判断是否有添加参数
             var v = this.runForm.domains.length
             if (this.runForm.domains === undefined || v <= 0){ 
-             this.$http.post('run_src',this.runForm)
-              // console.log(this.runForm)
+             const { data: res } = await this.$http.post('run_src',this.runForm)
+             this.console_text = res.msg
+             console.log(this.console_text)
               }
             else{ 
               for(let i = 0; i < this.runForm.domains.length; i++){
-                  // console.log(this.runForm.domains[i].value)
                   var a1 = this.runForm.domains[i].value
                   if( a1.search(':') === -1 ){ console.log('添加参数不合法') }
                   var a2 = a1.split(':')
                   this.$set(this.runForm,a2[0],a2[1])
               }
-              this.$http.post('run_src',this.runForm)
+              const { data: res } = await this.$http.post('run_src',this.runForm)
+               this.console_text = res.msg
             }
-            this.console_text = '运行成功'
         })
       },
       // 根据环境获取店铺信息
