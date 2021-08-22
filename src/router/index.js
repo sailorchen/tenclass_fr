@@ -12,13 +12,14 @@ Vue.use(VueRouter)
 // 配置请求的根路径
 axios.defaults.baseURL = 'http://127.0.0.1:7000/first/api/v1'
 // 配置拦截器
-// axios.interceptors.request.use(config =>{
-//   console.log(config)
-//   // 最后必须返回config
-//   axios.headers.Authorization = window.sessionStorage.getItem('token')
-//   return config
-// })
+axios.interceptors.request.use(config =>{
+  console.log(config)
+ // 最后必须返回config
+  config.headers.token = window.sessionStorage.getItem('token')
+  return config
+})
 Vue.prototype.$http = axios
+Vue.config.productionTip = false
 
 const routes = [
   {
